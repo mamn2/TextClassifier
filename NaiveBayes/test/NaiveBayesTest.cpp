@@ -14,7 +14,7 @@ TEST_CASE("Maps Input") {
     std::string trainingLabels = "/Users/mohamedamn/Downloads/digitdata/traininglabels";
     std::string trainingImages = "/Users/mohamedamn/Downloads/digitdata/trainingimages";
     
-    std::multimap<int, std::array<std::array<int, 28>, 28>> data = LoadData(trainingImages, trainingLabels);
+    std::multimap<int, ImageData> data = LoadData(trainingImages, trainingLabels);
     
     
 }

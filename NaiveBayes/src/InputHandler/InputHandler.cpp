@@ -9,7 +9,7 @@
 #include "InputHandler.hpp"
 #include <fstream>
 
-std::multimap<int, std::array<std::array<int, imageSideLength>, imageSideLength>> LoadData(std::string& imagesFile, std::string& labelsFile) {
+std::multimap<int, ImageData> LoadData(std::string& imagesFile, std::string& labelsFile) {
     
     std::ifstream imagesFileStream;
     imagesFileStream.open(imagesFile);
@@ -17,33 +17,36 @@ std::multimap<int, std::array<std::array<int, imageSideLength>, imageSideLength>
     std::ifstream labelsFileStream;
     labelsFileStream.open(labelsFile);
     
-    std::string label;
+    std::string imageLabel;
     
-    std::multimap<int, std::array<std::array<int, imageSideLength>, imageSideLength>> mappedImageData;
+    std::multimap<int, ImageData> mappedImageData;
     
     //Goes through each line in the traininglabels file and matches it with data in the trainingimages file
-    while (getline(labelsFileStream, label)) {
-        int integerLabel = std::stoi(label);
+    while (getline(labelsFileStream, imageLabel)) {
+        int imageLabelInt = std::stoi(imageLabel);
         
-        std::array<std::array<int, imageSideLength>, imageSideLength> image;
+        ImageData currentImage;
         
         //Adds each character to the 2d array representing the given image
-        for (int i = 0; i < imageSideLength; i++) {
-            for (int j = 0; j < imageSideLength + 1; j++) {
+        for (int i = 0; i < kImageSideLength; i++) {
+            for (int j = 0; j < kImageSideLength + 1; j++) {
                 char pixel;
                 imagesFileStream.get(pixel);
+                
+                //Gives gray and black pixels a value of 1 and white pixels a value of 0
                 if (pixel == '\n') {
                     continue;
                 } else if (pixel == '#') {
-                    image[i][j] = 1;
+                    currentImage.pixelArray[i][j] = BLACK;
                 } else if (pixel == '+') {
-                    image[i][j] = 1;
+                    currentImage.pixelArray[i][j] = GREY;
                 } else {
-                    image[i][j] = 0;
+                    currentImage.pixelArray[i][j] = WHITE;
                 }
             }
         }
-        mappedImageData.insert({integerLabel, image});
+        
+        mappedImageData.insert({imageLabelInt, currentImage});
     }
     
     return mappedImageData;
