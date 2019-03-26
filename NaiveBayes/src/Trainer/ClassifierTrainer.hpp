@@ -9,15 +9,11 @@
 #ifndef ClassifierTrainer_hpp
 #define ClassifierTrainer_hpp
 
-#pragma once
-
-#include <stdio.h>
-#include <array>
-#include <map>
 #include "InputHandler.hpp"
 
 constexpr double kLaplaceSmoothing = 4.0;
 
+double ProbabilityOfClass(int imageClass, std::multimap<int, ImageData>& data);
 double ProbabilityOfFeatureGivenClass(int imageClass, int feature, int pixelArrayX, int pixelArrayY, std::multimap<int, ImageData> data);
 
 

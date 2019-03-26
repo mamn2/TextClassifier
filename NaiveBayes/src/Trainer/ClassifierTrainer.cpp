@@ -8,6 +8,15 @@
 
 #include "ClassifierTrainer.hpp"
 
+double ProbabilityOfClass(int imageClass, std::multimap<int, ImageData>& data) {
+    
+    unsigned long numWithImageClass = data.count(imageClass);
+    unsigned long numImages = data.size();
+    
+    return (double) numWithImageClass / numImages;
+    
+}
+
 double ProbabilityOfFeatureGivenClass(int imageClass, int feature, int pixelArrayX, int pixelArrayY, std::multimap<int, ImageData> data) {
     
     auto lowerBoundItr = data.lower_bound(imageClass);
