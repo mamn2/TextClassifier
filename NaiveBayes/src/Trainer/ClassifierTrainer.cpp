@@ -44,12 +44,12 @@ double ProbabilityOfFeatureGivenClass(int imageClass, int pixelArrayX, int pixel
     
 }
 
-std::array<std::array<double, kImageSideLength>, kImageSideLength> GetPixelProbabilitiesForClass(int imageClass, std::multimap<int, ImageData>& trainingData) {
+ImageClassProbabilityData GetPixelProbabilitiesForClass(int imageClass, std::multimap<int, ImageData>& trainingData) {
     
-    std::array<std::array<double, kImageSideLength>, kImageSideLength> probabilitesForClass;
+    ImageClassProbabilityData probabilitesForClass;
     for (int i = 0; i < kImageSideLength; i++) {
         for (int j = 0; j < kImageSideLength; j++) {
-            probabilitesForClass[i][j] = ProbabilityOfFeatureGivenClass(imageClass, i, j, trainingData);
+            probabilitesForClass.pixelsProbability[i][j] = ProbabilityOfFeatureGivenClass(imageClass, i, j, trainingData);
         }
     }
     
@@ -57,9 +57,9 @@ std::array<std::array<double, kImageSideLength>, kImageSideLength> GetPixelProba
     
 }
 
-std::array<std::array<std::array<double, kImageSideLength>, kImageSideLength>, kNumClasses> GetPixelProbabilitiesAllClasses(std::multimap<int, ImageData>& data) {
+std::array<ImageClassProbabilityData, kNumClasses> GetPixelProbabilitiesAllClasses(std::multimap<int, ImageData>& data) {
     
-    std::array<std::array<std::array<double, kImageSideLength>, kImageSideLength>, kNumClasses> allProbabilities;
+    std::array<ImageClassProbabilityData, kNumClasses> allProbabilities;
 
     //for each class, calculate probability of a feature
     for (int i = 0; i < kNumClasses; i++) {

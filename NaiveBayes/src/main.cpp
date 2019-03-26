@@ -23,7 +23,7 @@ int main(int argc, const char * argv[]) {
     
     std::multimap<int, ImageData> testData = LoadData(testImages, testLabels);
     
-    std::array<std::array<std::array<double, 28>, 28>, 10> allProbabilities = GetPixelProbabilitiesAllClasses(data);
+    std::array<ImageClassProbabilityData, kNumClasses> allProbabilities = GetPixelProbabilitiesAllClasses(data);
     
     int numCorrect = 0;
     int numWrong = 0;
