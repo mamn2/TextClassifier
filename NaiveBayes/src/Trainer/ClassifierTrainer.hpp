@@ -11,12 +11,11 @@
 
 #include "InputHandler.hpp"
 
-constexpr double kLaplaceSmoothing = 4.0;
+constexpr double kLaplaceSmoothing = 0.1;
 
 double ProbabilityOfClass(int imageClass, std::multimap<int, ImageData>& data);
-double ProbabilityOfFeatureGivenClass(int imageClass, int feature, int pixelArrayX, int pixelArrayY, std::multimap<int, ImageData> data);
-double ProbabilityImageBelongsToClass(int imageClass, ImageData image, std::multimap<int, ImageData> data);
-long HighestProbableClassOfImage(ImageData image, std::multimap<int, ImageData> data);
-std::vector<std::vector<double>> GetFeatureProbabilities(std::multimap<int, ImageData image>> data, int feature)
+double ProbabilityOfFeatureGivenClass(int imageClass, int pixelArrayX, int pixelArrayY, std::multimap<int, ImageData>& data);
+std::array<std::array<double, 28>, 28> GetPixelProbabilitiesForClass(int imageClass, std::multimap<int, ImageData>& data);
+std::array<std::array<std::array<double, 28>, 28>, 10> GetPixelProbabilitiesAllClasses(std::multimap<int, ImageData>& data);
 
 #endif /* ClassifierTrainer_hpp */

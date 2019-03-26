@@ -10,5 +10,13 @@
 #define ClassifierEvaluator_hpp
 
 #include <stdio.h>
+#include "InputHandler.hpp"
+#include "ClassifierTrainer.hpp"
+
+//std::array<std::array<std::array<double, kImageSideLength>, kImageSideLength>, 10> allProbabilities;
+
+int HighestProbableClassOfImage(ImageData image, std::multimap<int, ImageData>& data, std::array<std::array<std::array<double, 28>, 28>, 10>& probabilites);
+double ProbabilityImageBelongsToClass(int imageClass, ImageData image, std::array<std::array<double, 28>, 28>& probabilities, double probOfClass);
+
 
 #endif /* ClassifierEvaluator_hpp */
