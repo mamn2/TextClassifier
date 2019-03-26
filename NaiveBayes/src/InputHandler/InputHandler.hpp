@@ -15,6 +15,10 @@
 
 constexpr int imageSideLength = 28;
 
+struct ImageData {
+    std::array<std::array<int, imageSideLength>, imageSideLength> pixelArray;
+};
+
 // Loads image data from file. Returns a map associating each number with a set of example images
 std::multimap<int, std::array<std::array<int, imageSideLength>, imageSideLength>> LoadData(std::string& imagesFile, std::string& labelsFile);
 
