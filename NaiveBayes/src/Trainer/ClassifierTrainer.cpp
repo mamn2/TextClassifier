@@ -48,10 +48,26 @@ double ProbabilityImageBelongsToClass(int imageClass, ImageData image, std::mult
     
     for (int i = 0; i < image.pixelArray.size(); i++) {
         for (int j = 0; j < image.pixelArray[i].size(); j++) {
-            probabilityImageBelongsToClass *= log(ProbabilityOfFeatureGivenClass(imageClass, image.pixelArray[i][j], i, j, data));
+            probabilityImageBelongsToClass += log(ProbabilityOfFeatureGivenClass(imageClass, image.pixelArray[i][j], i, j, data));
         }
     }
     
     return probabilityImageBelongsToClass;
     
 }
+
+long HighestProbableClassOfImage(ImageData image, std::multimap<int, ImageData> data) {
+    
+    std::array<double, 9> probabilitiesOfClasses;
+    
+    for (int i = 0; i <= 9; i++) {
+        probabilitiesOfClasses[i] = ProbabilityImageBelongsToClass(i, image, data);
+    }
+    
+    long maxElementIndex = std::max_element(probabilitiesOfClasses.begin(), probabilitiesOfClasses.end()) - probabilitiesOfClasses.begin();
+    
+    return maxElementIndex;
+    
+}
+
+
