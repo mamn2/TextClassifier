@@ -18,19 +18,23 @@ int main(int argc, const char * argv[]) {
     
     std::multimap<int, ImageData> data = LoadData(trainingImages, trainingLabels);
     
+    std::string testImages = "/Users/mohamedamn/Downloads/digitdata/testimages";
+    std::string testLabels = "/Users/mohamedamn/Downloads/digitdata/testlabels";
+    
+    std::multimap<int, ImageData> testData = LoadData(testImages, testLabels);
+    
     std::array<std::array<std::array<double, 28>, 28>, 10> allProbabilities = GetPixelProbabilitiesAllClasses(data);
     
     int numCorrect = 0;
     int numWrong = 0;
     
-    for (std::multimap<int, ImageData>::iterator it = data.begin(); it != data.end(); ++it) {
-        if (HighestProbableClassOfImage((*it).second, data, allProbabilities) == (*it).first) {
+    for (std::multimap<int, ImageData>::iterator it = testData.begin(); it != testData.end(); ++it) {
+        if (HighestProbableClassOfImage((*it).second, testData, allProbabilities) == (*it).first) {
             numCorrect++;
         } else {
             numWrong++;
         }
     }
-    //long highestProb = HighestProbableClassOfImage((*data.end()).second, data, allProbabilities);
     
     std::cout << numCorrect << "     " << numWrong;
     

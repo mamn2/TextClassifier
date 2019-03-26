@@ -10,7 +10,8 @@
 #include <cmath>
 
 
-double ProbabilityImageBelongsToClass(int imageClass, ImageData image, std::array<std::array<double, 28>, 28>& probabilities, double probOfClass) {
+double ProbabilityImageBelongsToClass(int imageClass,
+    ImageData& image, std::array<std::array<double, kImageSideLength>, kImageSideLength>& probabilities, double probOfClass) {
     
     double probability = log(probOfClass);
     
@@ -28,7 +29,8 @@ double ProbabilityImageBelongsToClass(int imageClass, ImageData image, std::arra
     
 }
 
-int HighestProbableClassOfImage(ImageData image, std::multimap<int, ImageData>& data, std::array<std::array<std::array<double, 28>, 28>, 10>& probabilites) {
+int HighestProbableClassOfImage(ImageData& image,
+    std::multimap<int, ImageData>& data, std::array<std::array<std::array<double, 28>, 28>, 10>& probabilites) {
     
     double highestProbability = ProbabilityImageBelongsToClass(0, image, probabilites[0], ProbabilityOfClass(0, data));
     int currentMostLikelyCandidate = 0;

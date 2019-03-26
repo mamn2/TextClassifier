@@ -17,9 +17,9 @@ std::multimap<int, ImageData> LoadData(std::string& imagesFile, std::string& lab
     std::ifstream labelsFileStream;
     labelsFileStream.open(labelsFile);
     
-    std::string imageLabel;
+    std::multimap<int, ImageData> mappedImagesData;
     
-    std::multimap<int, ImageData> mappedImageData;
+    std::string imageLabel;
     
     //Goes through each line in the traininglabels file and matches it with data in the trainingimages file
     while (getline(labelsFileStream, imageLabel)) {
@@ -30,15 +30,15 @@ std::multimap<int, ImageData> LoadData(std::string& imagesFile, std::string& lab
         //Adds each character to the 2d array representing the given image
         for (int i = 0; i < kImageSideLength; i++) {
             for (int j = 0; j < kImageSideLength + 1; j++) {
-                char pixel;
-                imagesFileStream.get(pixel);
+                char pixelValue;
+                imagesFileStream.get(pixelValue);
                 
                 //Gives gray and black pixels a value of 1 and white pixels a value of 0
-                if (pixel == '\n') {
+                if (pixelValue == '\n') {
                     continue;
-                } else if (pixel == '#') {
+                } else if (pixelValue == '#') {
                     currentImage.pixelArray[i][j] = BLACK;
-                } else if (pixel == '+') {
+                } else if (pixelValue == '+') {
                     currentImage.pixelArray[i][j] = GREY;
                 } else {
                     currentImage.pixelArray[i][j] = WHITE;
@@ -46,9 +46,9 @@ std::multimap<int, ImageData> LoadData(std::string& imagesFile, std::string& lab
             }
         }
         
-        mappedImageData.insert({imageLabelInt, currentImage});
+        mappedImagesData.insert( { imageLabelInt, currentImage } );
     }
     
-    return mappedImageData;
+    return mappedImagesData;
     
 }

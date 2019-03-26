@@ -9,19 +9,20 @@
 #include "ClassifierTrainer.hpp"
 #include <cmath>
 
-double ProbabilityOfClass(int imageClass, std::multimap<int, ImageData>& data) {
+double ProbabilityOfClass(int imageClass, std::multimap<int, ImageData>& trainingData) {
     
-    unsigned long numWithImageClass = data.count(imageClass);
-    unsigned long numImages = data.size();
+    unsigned long numWithImageClass = trainingData.count(imageClass);
+    unsigned long numImages = trainingData.size();
     
     return (double) numWithImageClass / numImages;
     
 }
 
-double ProbabilityOfFeatureGivenClass(int imageClass, int pixelArrayX, int pixelArrayY, std::multimap<int, ImageData>& data) {
+double ProbabilityOfFeatureGivenClass(int imageClass, int pixelArrayX, int pixelArrayY,
+                                      std::multimap<int, ImageData>& trainingData) {
     
-    auto lowerBoundItr = data.lower_bound(imageClass);
-    auto upperBoundItr = data.upper_bound(imageClass);
+    auto lowerBoundItr = trainingData.lower_bound(imageClass);
+    auto upperBoundItr = trainingData.upper_bound(imageClass);
     
     int numOccurenceClassWithFeature = 0;
     int numClassOccurence = 0;
@@ -36,18 +37,19 @@ double ProbabilityOfFeatureGivenClass(int imageClass, int pixelArrayX, int pixel
         lowerBoundItr++;
     }
     
-    double probablityOfFeatureGivenClass = (kLaplaceSmoothing + numOccurenceClassWithFeature) / (2 * kLaplaceSmoothing + numClassOccurence);
+    double probablityOfFeatureGivenClass = (kLaplaceSmoothing + numOccurenceClassWithFeature)
+                                         / (2 * kLaplaceSmoothing + numClassOccurence);
     
     return probablityOfFeatureGivenClass;
     
 }
 
-std::array<std::array<double, 28>, 28> GetPixelProbabilitiesForClass(int imageClass, std::multimap<int, ImageData>& data) {
+std::array<std::array<double, kImageSideLength>, kImageSideLength> GetPixelProbabilitiesForClass(int imageClass, std::multimap<int, ImageData>& trainingData) {
     
-    std::array<std::array<double, 28>, 28> probabilitesForClass;
-    for (int i = 0; i < 28; i++) {
-        for (int j = 0; j < 28; j++) {
-            probabilitesForClass[i][j] = ProbabilityOfFeatureGivenClass(imageClass, i, j, data);
+    std::array<std::array<double, kImageSideLength>, kImageSideLength> probabilitesForClass;
+    for (int i = 0; i < kImageSideLength; i++) {
+        for (int j = 0; j < kImageSideLength; j++) {
+            probabilitesForClass[i][j] = ProbabilityOfFeatureGivenClass(imageClass, i, j, trainingData);
         }
     }
     
@@ -55,45 +57,16 @@ std::array<std::array<double, 28>, 28> GetPixelProbabilitiesForClass(int imageCl
     
 }
 
-std::array<std::array<std::array<double, 28>, 28>, 10> GetPixelProbabilitiesAllClasses(std::multimap<int, ImageData>& data) {
+std::array<std::array<std::array<double, kImageSideLength>, kImageSideLength>, kNumClasses> GetPixelProbabilitiesAllClasses(std::multimap<int, ImageData>& data) {
     
-    std::array<std::array<std::array<double, 28>, 28>, 10> allProbabilities;
+    std::array<std::array<std::array<double, kImageSideLength>, kImageSideLength>, kNumClasses> allProbabilities;
 
     //for each class, calculate probability of a feature
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < kNumClasses; i++) {
         allProbabilities[i] = GetPixelProbabilitiesForClass(i, data);
     }
     
     return allProbabilities;
     
 }
-
-//double ProbabilityImageBelongsToClass(int imageClass, ImageData image, std::multimap<int, ImageData>& data) {
-//
-//    double probabilityImageBelongsToClass = log(ProbabilityOfClass(imageClass, data));
-//
-//    for (int i = 0; i < image.pixelArray.size(); i++) {
-//        for (int j = 0; j < image.pixelArray[i].size(); j++) {
-//            probabilityImageBelongsToClass += log(ProbabilityOfFeatureGivenClass(imageClass, image.pixelArray[i][j], i, j, data));
-//        }
-//    }
-//
-//    return probabilityImageBelongsToClass;
-//
-//}
-
-//long HighestProbableClassOfImage(ImageData image, std::multimap<int, ImageData>& data) {
-//    
-//    std::array<double, 9> probabilitiesOfClasses;
-//    
-//    for (int i = 0; i <= 9; i++) {
-//        probabilitiesOfClasses[i] = ProbabilityImageBelongsToClass(i, image, data);
-//    }
-//    
-//    long maxElementIndex = std::max_element(probabilitiesOfClasses.begin(), probabilitiesOfClasses.end()) - probabilitiesOfClasses.begin();
-//    
-//    return maxElementIndex;
-//    
-//}
-
 
