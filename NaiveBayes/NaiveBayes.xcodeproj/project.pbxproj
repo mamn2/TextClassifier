@@ -10,6 +10,7 @@
 		7455BA93224137E400B7E256 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7455BA92224137E400B7E256 /* main.cpp */; };
 		7455BA9B224A83C700B7E256 /* InputHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7455BA99224A83C700B7E256 /* InputHandler.cpp */; };
 		7455BAA7224A93FE00B7E256 /* NaiveBayesTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7455BAA5224A93FE00B7E256 /* NaiveBayesTest.cpp */; };
+		7455BAAC224AA53F00B7E256 /* ClassifierTrainer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7455BAAA224AA53F00B7E256 /* ClassifierTrainer.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -36,6 +37,8 @@
 		7455BAA2224A8EC800B7E256 /* testimages */ = {isa = PBXFileReference; lastKnownFileType = text; name = testimages; path = ../../../../Downloads/digitdata/testimages; sourceTree = "<group>"; };
 		7455BAA5224A93FE00B7E256 /* NaiveBayesTest.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = NaiveBayesTest.cpp; sourceTree = "<group>"; };
 		7455BAA8224A943500B7E256 /* catch.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = catch.hpp; path = "../../../cpptictactoe-mamn2/cpptictactoe/tests/catch.hpp"; sourceTree = "<group>"; };
+		7455BAAA224AA53F00B7E256 /* ClassifierTrainer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ClassifierTrainer.cpp; sourceTree = "<group>"; };
+		7455BAAB224AA53F00B7E256 /* ClassifierTrainer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ClassifierTrainer.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +73,7 @@
 		7455BA91224137E400B7E256 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				7455BAA9224AA4EA00B7E256 /* Trainer */,
 				7455BAA3224A935800B7E256 /* InputHandler */,
 				7455BA92224137E400B7E256 /* main.cpp */,
 			);
@@ -104,6 +108,15 @@
 				7455BAA5224A93FE00B7E256 /* NaiveBayesTest.cpp */,
 			);
 			path = test;
+			sourceTree = "<group>";
+		};
+		7455BAA9224AA4EA00B7E256 /* Trainer */ = {
+			isa = PBXGroup;
+			children = (
+				7455BAAA224AA53F00B7E256 /* ClassifierTrainer.cpp */,
+				7455BAAB224AA53F00B7E256 /* ClassifierTrainer.hpp */,
+			);
+			path = Trainer;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -162,6 +175,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7455BAAC224AA53F00B7E256 /* ClassifierTrainer.cpp in Sources */,
 				7455BA93224137E400B7E256 /* main.cpp in Sources */,
 				7455BA9B224A83C700B7E256 /* InputHandler.cpp in Sources */,
 				7455BAA7224A93FE00B7E256 /* NaiveBayesTest.cpp in Sources */,
