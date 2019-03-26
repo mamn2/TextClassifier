@@ -7,6 +7,7 @@
 //
 
 #include "ClassifierTrainer.hpp"
+#include <cmath>
 
 double ProbabilityOfClass(int imageClass, std::multimap<int, ImageData>& data) {
     
@@ -22,21 +23,35 @@ double ProbabilityOfFeatureGivenClass(int imageClass, int feature, int pixelArra
     auto lowerBoundItr = data.lower_bound(imageClass);
     auto upperBoundItr = data.upper_bound(imageClass);
     
-    int numClassWithFeature = 0;
-    int numClass = 0;
+    int numOccurenceClassWithFeature = 0;
+    int numClassOccurence = 0;
     
     while (lowerBoundItr != upperBoundItr) {
         if (lowerBoundItr -> first == imageClass) {
             if (lowerBoundItr -> second.pixelArray[pixelArrayX][pixelArrayY] == feature) {
-                numClassWithFeature++;
+                numOccurenceClassWithFeature++;
             }
-            numClass++;
+            numClassOccurence++;
         }
         lowerBoundItr++;
     }
     
-    double probablityOfFeatureGivenClass = (kLaplaceSmoothing + numClassWithFeature) / (2 * kLaplaceSmoothing + numClass);
+    double probablityOfFeatureGivenClass = (kLaplaceSmoothing + numOccurenceClassWithFeature) / (2 * kLaplaceSmoothing + numClassOccurence);
     
     return probablityOfFeatureGivenClass;
+    
+}
+
+double ProbabilityImageBelongsToClass(int imageClass, ImageData image, std::multimap<int, ImageData> data) {
+    
+    double probabilityImageBelongsToClass = log(ProbabilityOfClass(imageClass, data));
+    
+    for (int i = 0; i < image.pixelArray.size(); i++) {
+        for (int j = 0; j < image.pixelArray[i].size(); j++) {
+            probabilityImageBelongsToClass *= log(ProbabilityOfFeatureGivenClass(imageClass, image.pixelArray[i][j], i, j, data));
+        }
+    }
+    
+    return probabilityImageBelongsToClass;
     
 }
