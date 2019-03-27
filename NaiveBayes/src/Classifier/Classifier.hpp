@@ -14,9 +14,9 @@
 #include "ClassifierTrainer.hpp"
 
 int HighestProbableClassOfImage(ImageData& image,
-        std::multimap<int, ImageData>& data, std::array<ImageClassProbabilityData, kNumClasses>& probabilites);
+        std::multimap<int, ImageData>& trainedData, std::array<ImageClassProbabilityData, kNumClasses>& trainedDataProbabilities);
 
 double ProbabilityImageBelongsToClass(int imageClass, ImageData& image,
-        ImageClassProbabilityData& probabilities, double probOfClass);
+        ImageClassProbabilityData& trainedDataProbabilities, double probOfClass);
 
 #endif /* ClassifierEvaluator_hpp */

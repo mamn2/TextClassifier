@@ -23,8 +23,8 @@ double ProbabilityOfClass(int imageClass, std::multimap<int, ImageData>& trainin
 double ProbabilityOfFeatureGivenClass(int imageClass, int pixelArrayX, int pixelArrayY,
                                       std::multimap<int, ImageData>& trainingData);
 
-ImageClassProbabilityData GetPixelProbabilitiesForClass(int imageClass, std::multimap<int, ImageData>& data);
+ImageClassProbabilityData GetPixelProbabilitiesForClass(int imageClass, std::multimap<int, ImageData>& trainingData);
 
-std::array<ImageClassProbabilityData, kNumClasses> GetPixelProbabilitiesAllClasses(std::multimap<int, ImageData>& data);
+std::array<ImageClassProbabilityData, kNumClasses> GetPixelProbabilitiesAllClasses(std::multimap<int, ImageData>& trainingData);
 
 #endif /* ClassifierTrainer_hpp */

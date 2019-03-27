@@ -21,20 +21,18 @@ double ProbabilityOfClass(int imageClass, std::multimap<int, ImageData>& trainin
 double ProbabilityOfFeatureGivenClass(int imageClass, int pixelArrayX, int pixelArrayY,
                                       std::multimap<int, ImageData>& trainingData) {
     
-    auto lowerBoundItr = trainingData.lower_bound(imageClass);
-    auto upperBoundItr = trainingData.upper_bound(imageClass);
-    
     int numOccurenceClassWithFeature = 0;
     int numClassOccurence = 0;
     
-    while (lowerBoundItr != upperBoundItr) {
-        if (lowerBoundItr -> first == imageClass) {
-            if (lowerBoundItr -> second.pixelArray[pixelArrayX][pixelArrayY] == 1) {
-                numOccurenceClassWithFeature++;
-            }
-            numClassOccurence++;
+    auto lowerBoundItr = trainingData.lower_bound(imageClass);
+    auto upperBoundItr = trainingData.upper_bound(imageClass);
+    
+    //Iterates through the pixel in all instances of class in training data
+    for (auto itr = lowerBoundItr; itr != upperBoundItr; ++itr) {
+        if (itr -> second.pixelArray[pixelArrayX][pixelArrayY] == 1) {
+            numOccurenceClassWithFeature++;
         }
-        lowerBoundItr++;
+        numClassOccurence++;
     }
     
     double probablityOfFeatureGivenClass = (kLaplaceSmoothing + numOccurenceClassWithFeature)
@@ -57,13 +55,13 @@ ImageClassProbabilityData GetPixelProbabilitiesForClass(int imageClass, std::mul
     
 }
 
-std::array<ImageClassProbabilityData, kNumClasses> GetPixelProbabilitiesAllClasses(std::multimap<int, ImageData>& data) {
+std::array<ImageClassProbabilityData, kNumClasses> GetPixelProbabilitiesAllClasses(std::multimap<int, ImageData>& trainingData) {
     
     std::array<ImageClassProbabilityData, kNumClasses> allProbabilities;
 
     //for each class, calculate probability of a feature
     for (int i = 0; i < kNumClasses; i++) {
-        allProbabilities[i] = GetPixelProbabilitiesForClass(i, data);
+        allProbabilities[i] = GetPixelProbabilitiesForClass(i, trainingData);
     }
     
     return allProbabilities;
