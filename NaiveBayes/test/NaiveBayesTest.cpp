@@ -9,6 +9,7 @@
 #define CATCH_CONFIG_MAIN
 #include "catch.hpp"
 #include "Classifier.hpp"
+#include <fstream>
 
 std::string trainingLabels = "/Users/mohamedamn/Downloads/digitdata/traininglabels";
 std::string trainingImages = "/Users/mohamedamn/Downloads/digitdata/trainingimages";
@@ -49,5 +50,27 @@ TEST_CASE("Calculates label 75% of the time") {
     int numWinners = ReportConfusionMatrix(testData, allProbabilities);
     
     CHECK((double) numWinners / 1000 >= .75);
+    
+}
+
+TEST_CASE("Prints training data") {
+    
+    std::string testImages = "/Users/mohamedamn/Downloads/digitdata/testimages";
+    std::string testLabels = "/Users/mohamedamn/Downloads/digitdata/testlabels";
+    
+    std::multimap<int, ImageData> testData = LoadData(testImages, testLabels);
+    
+    SaveTrainingModels(std::string("/Users/mohamedamn/Documents/naivebayes-mamn2/NaiveBayes/Data/trainingdata"), testData);
+    
+    std::ifstream myFile;
+    myFile.open("/Users/mohamedamn/Documents/naivebayes-mamn2/NaiveBayes/Data/trainingdata");
+    
+    std::string line;
+    
+    for (int i = 1; i < 32; i++) {
+        getline(myFile, line);
+    }
+    
+    CHECK(std::string("PIXEL NUMBER 23: 0.001109") == line);
     
 }
