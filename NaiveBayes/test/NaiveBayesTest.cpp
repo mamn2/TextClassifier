@@ -42,19 +42,12 @@ TEST_CASE("Calculates label 75% of the time") {
     
     std::multimap<int, ImageData> testData = LoadData(testImages, testLabels);
     
+    SaveTrainingModels(std::string("/Users/mohamedamn/Documents/naivebayes-mamn2/NaiveBayes/Data/trainingdata"), testData);
+    
     std::array<ImageClassProbabilityData, kNumClasses> allProbabilities = GetPixelProbabilitiesAllClasses(trainingData);
     
-    int numCorrect = 0;
-    int numWrong = 0;
+    int numWinners = ReportConfusionMatrix(testData, allProbabilities);
     
-    for (auto itr = testData.begin(); itr != testData.end(); ++itr) {
-        if (HighestProbableClassOfImage((*itr).second, testData, allProbabilities) == (*itr).first) {
-            numCorrect++;
-        } else {
-            numWrong++;
-        }
-    }
-    
-    CHECK((double) numCorrect / (numCorrect + numWrong) >= .75);
+    CHECK((double) numWinners / 1000 >= .75);
     
 }

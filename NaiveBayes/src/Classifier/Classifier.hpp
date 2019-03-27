@@ -21,4 +21,9 @@ int HighestProbableClassOfImage(ImageData& image,
 double ProbabilityImageBelongsToClass(int imageClass, ImageData& image,
         ImageClassProbabilityData& trainedDataProbabilities, double probOfClass);
 
+//Prints a matrix showing the actual number vs what the classifier reported it as
+//Returns number of correct classifications
+int ReportConfusionMatrix(std::multimap<int, ImageData>& testData, std::array<ImageClassProbabilityData,
+                          kNumClasses>& allProbabilities);
+
 #endif /* ClassifierEvaluator_hpp */

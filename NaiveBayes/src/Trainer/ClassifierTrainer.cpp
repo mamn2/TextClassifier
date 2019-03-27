@@ -8,6 +8,10 @@
 
 #include "ClassifierTrainer.hpp"
 #include <cmath>
+#include <string>
+#include <fstream>
+#include <iostream>
+#include <sstream>
 
 double ProbabilityOfClass(int imageClass, std::multimap<int, ImageData>& trainingData) {
     
@@ -68,3 +72,32 @@ std::array<ImageClassProbabilityData, kNumClasses> GetPixelProbabilitiesAllClass
     
 }
 
+void SaveTrainingModels(std::string file, std::multimap<int, ImageData>& trainingData) {
+    
+    std::array<ImageClassProbabilityData, kNumClasses> allFeatureProbabilities = GetPixelProbabilitiesAllClasses(trainingData);
+    
+    std::ofstream myFile;
+    myFile.open("file");
+
+    if (myFile.good()) {
+        
+        myFile << "TRAINING DATA\n\n\n";
+        
+        for (int i = 0; i < allFeatureProbabilities.size(); i++) {
+            myFile << "PROBABILITIES FOR CLASS '" << std::to_string(i) << "':\n";
+            for (int j = 0; j < allFeatureProbabilities[i].pixelsProbability.size(); j++) {
+                myFile << "\nPROBABILITES FOR LINE " << std::to_string(j) << "\n\n";
+                for (int k = 0; k < allFeatureProbabilities[i].pixelsProbability[j].size(); k++) {
+                    myFile << "PIXEL NUMBER " << std::to_string(k) << ": "
+                           << std::to_string(allFeatureProbabilities[i].pixelsProbability[j][k]) << "\n";
+                }
+            }
+        }
+        
+    } else {
+        std::cout << "File doesn't exist, sorry." << std::endl;
+    }
+    
+    myFile.close();
+    
+}

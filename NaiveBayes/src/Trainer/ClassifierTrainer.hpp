@@ -32,4 +32,6 @@ ImageClassProbabilityData GetPixelProbabilitiesForClass(int imageClass, std::mul
 //Gets all the pixel probability data for all classes
 std::array<ImageClassProbabilityData, kNumClasses> GetPixelProbabilitiesAllClasses(std::multimap<int, ImageData>& trainingData);
 
+void SaveTrainingModels(std::string fileName, std::multimap<int, ImageData>& trainingData);
+
 #endif /* ClassifierTrainer_hpp */

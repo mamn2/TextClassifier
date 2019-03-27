@@ -42,6 +42,7 @@
 		7455BAAB224AA53F00B7E256 /* ClassifierTrainer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ClassifierTrainer.hpp; sourceTree = "<group>"; };
 		7455BAAE224AC56B00B7E256 /* Classifier.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Classifier.cpp; sourceTree = "<group>"; };
 		7455BAAF224AC56B00B7E256 /* Classifier.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Classifier.hpp; sourceTree = "<group>"; };
+		7455BAB1224B16B800B7E256 /* trainingdata */ = {isa = PBXFileReference; lastKnownFileType = text; path = trainingdata; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,6 +93,7 @@
 				7455BA9F224A8EC800B7E256 /* testlabels */,
 				7455BAA1224A8EC800B7E256 /* trainingimages */,
 				7455BAA0224A8EC800B7E256 /* traininglabels */,
+				7455BAB1224B16B800B7E256 /* trainingdata */,
 			);
 			path = Data;
 			sourceTree = "<group>";
