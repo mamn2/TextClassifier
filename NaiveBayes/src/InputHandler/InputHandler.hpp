@@ -17,10 +17,9 @@ constexpr int kImageSideLength = 28;
 
 enum PixelType { WHITE = 0, BLACK = 1, GREY = 1 };
 
+//Contains info about the image, i.e color of each pixel
 struct ImageData {
-    
     std::array<std::array<int, kImageSideLength>, kImageSideLength> pixelArray;
-    
 };
 
 // Loads image data from file. Returns a map associating each number with a set of example images
